@@ -1,11 +1,6 @@
 from flask import Flask, request, jsonify, render_template_string
-
 app = Flask(__name__)
-
-# In-memory user store
 users = []
-
-# Home route with form interface
 @app.route('/', methods=['GET'])
 def index():
     return render_template_string("""
@@ -43,8 +38,6 @@ def index():
             <button type="submit">Delete User</button>
         </form>
     """)
-
-# API: Get all users
 @app.route('/users', methods=['GET'])
 def get_users():
     user_id = request.args.get('id')
@@ -54,8 +47,6 @@ def get_users():
             return jsonify(user), 200
         return jsonify({'message': 'User not found'}), 404
     return jsonify(users), 200
-
-# API: Create user
 @app.route('/users', methods=['POST'])
 def create_user():
     data = request.form or request.get_json()
@@ -92,3 +83,4 @@ def delete_user():
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
+
